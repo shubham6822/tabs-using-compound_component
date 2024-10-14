@@ -27,18 +27,21 @@ Tabs.List = function TabsList({ children, className }: TabsListProps) {
 }
 
 Tabs.Trigger = function TabsTrigger({ children, className, value }: TabsTriggerProps) {
-    const { setActiveTab } = useContext(TabContext)
+    const { setActiveTab, activeTab } = useContext(TabContext)
+    const isActive = activeTab === value;
+    const activeClass = isActive ? 'bg-orange-500' : 'bg-slate-300';
     return (
-        <button className={`${className}`} onClick={() => setActiveTab(value)}>
+        <button className={`${className} ${activeClass} px-4 py-3 m-3 rounded-xl`} onClick={() => setActiveTab(value)}>
             {children}
         </button>
     )
 }
 
 Tabs.Content = function TabsContent({ children, className, value }: TabsContentProps) {
+    const { activeTab } = useContext(TabContext)
     return (
-        <div className={`${className}`}>
-            {children}
+        <div className={`${className} px-4`}>
+            {activeTab === value ? children : null}
         </div>
     )
 }
